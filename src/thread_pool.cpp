@@ -21,7 +21,7 @@ using namespace me::eax::thread_pool;
 auto main() -> int {
     auto system = std::make_unique<System>();
 
-    auto f = system->spawn<int>([]() -> int {
+    auto f = system->spawn([]() -> int {
         std::cout << "system.spawn - OK" << std::endl;
         return 123;
     });
@@ -39,7 +39,7 @@ auto main() -> int {
         return 0;
     });
 
-    system->spawn<int>([]() -> int {
+    system->spawn([]() -> int {
         std::cout << "This procedure is about to throw an exception" << std::endl;
         throw std::runtime_error("test exception");
     })->onFailure([](const std::exception& err) {

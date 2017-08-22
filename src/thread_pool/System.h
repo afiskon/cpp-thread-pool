@@ -51,12 +51,15 @@ public:
         }
     }
 
-    template<class T>
-    auto spawn(std::function<T(void)> lambda) -> std::shared_ptr< Future<T> > {
-        auto p = std::make_shared< Promise<T> >(*this);
+    template<
+        class L,
+        class R = typename std::result_of<L(void)>::type
+    >
+    auto spawn(L lambda) -> std::shared_ptr< Future<R> > {
+        auto p = std::make_shared< Promise<R> >(*this);
         _schedule([p, lambda]() {
             try {
-                T result = lambda();
+                R result = lambda();
                 try {
                     p->success(result);
                 } catch(const std::exception& err) {
