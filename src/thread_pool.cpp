@@ -48,6 +48,9 @@ auto main() -> int {
         throw std::runtime_error("This onSuccess should have never been called!");
     });
 
+
+    // TODO: test Promise class!
+
     system->wait();
 
     return 0;
